@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'terminal_paint'
+
+puts 'Hello from binary'
