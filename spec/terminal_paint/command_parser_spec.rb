@@ -12,6 +12,19 @@ module TerminalPaint
       end
     end
 
+    describe 'the S command' do
+      before do
+        command = 'I 5 5'
+        described_class.parse(command)
+      end
+
+      it 'renders the canvas in a puttable fashion' do
+        command = 'S'
+        stdout = StringIO.new
+        described_class.parse(command, stdout)
+        expect(stdout.string).to eq(Canvas.instance.render.join("\n") << "\n")
+      end
+    end
     describe 'the L X Y C command' do
       before do
         command = 'I 5 5'

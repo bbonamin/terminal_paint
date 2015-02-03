@@ -12,7 +12,7 @@ module TerminalPaint
         @stdout.print '>'
         input = @stdin.gets.to_s.chomp.strip
         break if input == 'X'
-        puts CommandParser.parse(input)
+        puts CommandParser.parse(input, @stdout)
       end
     end
   end
