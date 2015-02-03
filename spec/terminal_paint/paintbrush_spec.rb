@@ -8,7 +8,8 @@ module TerminalPaint
 
     describe '.paint_canvas' do
       it 'paints a given pixel on the canvas' do
-        described_class.paint_canvas(x: 1, y: 1, colour: 'C')
+        paintbrush = described_class.new(colour: 'C')
+        paintbrush.paint_canvas(x: 1, y: 1)
         expect(Canvas.instance.raw.first.first).to eq('C')
       end
     end

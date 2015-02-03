@@ -1,7 +1,11 @@
 module TerminalPaint
   class Paintbrush
-    def self.paint_canvas(x:, y:, colour:)
-      Canvas.instance.colour_at(x: x, y: y, colour: colour)
+    def initialize(colour: fail(ArgumentError, 'colour is required'))
+      @colour = colour
+    end
+
+    def paint_canvas(x:, y:)
+      Canvas.instance.colour_at(x: x, y: y, colour: @colour)
     end
   end
 end

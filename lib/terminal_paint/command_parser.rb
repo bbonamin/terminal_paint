@@ -8,10 +8,9 @@ module TerminalPaint
         )
       end
       input.match(/L\s+(\d+)\s+(\d+)\s+([A-Z])/) do |match_data|
-        Paintbrush.paint_canvas(
+        Paintbrush.new(colour: match_data[3]).paint_canvas(
           x: match_data[1].to_i,
-          y: match_data[2].to_i,
-          colour: match_data[3]
+          y: match_data[2].to_i
         )
       end
     end
