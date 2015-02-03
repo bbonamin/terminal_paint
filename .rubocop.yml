@@ -13,3 +13,7 @@ Style/Documentation:
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 30
+
+# Offense count: 1
+Metrics/AbcSize:
+  Max: 25
