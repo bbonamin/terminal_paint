@@ -13,5 +13,11 @@ module TerminalPaint
         Canvas.instance.colour_at(x: x, y: y, colour: @colour)
       end
     end
+
+    def paint_horizontal_line(y:, from:, to:)
+      from.upto(to).with_index do |x|
+        Canvas.instance.colour_at(x: x, y: y, colour: @colour)
+      end
+    end
   end
 end

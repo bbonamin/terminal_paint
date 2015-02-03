@@ -40,5 +40,20 @@ module TerminalPaint
         expect(Canvas.instance.raw[3][0]).to eq('C')
       end
     end
+
+    describe 'the H X1 X2 Y C command' do
+      before do
+        command = 'I 5 5'
+        described_class.parse(command)
+      end
+
+      it 'draws a line  from X1=3 to X2=5 of colour C at Y=4' do
+        command = 'H 3 5 4 C'
+        described_class.parse(command)
+        expect(Canvas.instance.raw[3][2]).to eq('C')
+        expect(Canvas.instance.raw[3][3]).to eq('C')
+        expect(Canvas.instance.raw[3][4]).to eq('C')
+      end
+    end
   end
 end
