@@ -22,7 +22,7 @@ module TerminalPaint
 
     def fill_region(x:, y:)
       current_colour = Canvas.instance.colour_at(x: x, y: y)
-      return if current_colour == @colour # code smell
+      return if current_colour == @colour
 
       # Change pixel colour
       Canvas.instance.colour_at(x: x, y: y, colour: @colour)
