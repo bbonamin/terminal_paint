@@ -8,7 +8,7 @@ A basic interactive bitmap editor for the terminal.
 ```
   $ git clone https://github.com/bbonamin/terminal_paint  
   $ cd terminal_paint  
-  $ rake gem  
+  $ rake build  
   $ gem install pkg/terminal_paint-0.0.1.gem  
 ```
 
