@@ -40,8 +40,63 @@ module TerminalPaint
     describe '#fill_region' do
       it 'changes the whole canvas color when it only has one color' do
         paintbrush = described_class.new(colour: 'C')
-        paintbrush.fill_region(y: 1, x: 1)
+        paintbrush.fill_region(x: 1, y: 1)
         expect(Canvas.instance.raw.flatten.uniq).to eq(['C'])
+      end
+
+      context 'when the canvas is divided by a vertical line' do
+        before do
+          paintbrush = described_class.new(colour: 'B')
+          paintbrush.paint_vertical_line(x: 3, from: 1, to: 6)
+        end
+
+        it 'only fills the left region if you fill for (1, 1)' do
+          paintbrush = described_class.new(colour: 'X')
+          paintbrush.fill_region(x: 1, y: 1)
+          expect(Canvas.instance.raw.map { |row| row[0] }.uniq).to eq(['X'])
+          expect(Canvas.instance.raw.map { |row| row[1] }.uniq).to eq(['X'])
+          expect(Canvas.instance.raw.map { |row| row[2] }.uniq).to eq(['B'])
+          expect(Canvas.instance.raw.map { |row| row[3] }.uniq).to eq(['O'])
+          expect(Canvas.instance.raw.map { |row| row[4] }.uniq).to eq(['O'])
+        end
+
+        it 'only fills the right region if you fill for (5,6)'  do
+          paintbrush = described_class.new(colour: 'X')
+          paintbrush.fill_region(x: 5, y: 6)
+          expect(Canvas.instance.raw.map { |row| row[0] }.uniq).to eq(['O'])
+          expect(Canvas.instance.raw.map { |row| row[1] }.uniq).to eq(['O'])
+          expect(Canvas.instance.raw.map { |row| row[2] }.uniq).to eq(['B'])
+          expect(Canvas.instance.raw.map { |row| row[3] }.uniq).to eq(['X'])
+          expect(Canvas.instance.raw.map { |row| row[4] }.uniq).to eq(['X'])
+        end
+      end
+      context 'when the canvas is divided by a horizontal line' do
+        before do
+          paintbrush = described_class.new(colour: 'B')
+          paintbrush.paint_horizontal_line(y: 3, from: 1, to: 5)
+        end
+
+        it 'only fills the top region if you fill for (1, 1)' do
+          paintbrush = described_class.new(colour: 'X')
+          paintbrush.fill_region(x: 1, y: 1)
+          expect(Canvas.instance.raw[0].uniq).to eq(['X'])
+          expect(Canvas.instance.raw[1].uniq).to eq(['X'])
+          expect(Canvas.instance.raw[2].uniq).to eq(['B'])
+          expect(Canvas.instance.raw[3].uniq).to eq(['O'])
+          expect(Canvas.instance.raw[4].uniq).to eq(['O'])
+          expect(Canvas.instance.raw[5].uniq).to eq(['O'])
+        end
+
+        it 'only fills the top region if you fill for (5, 6)' do
+          paintbrush = described_class.new(colour: 'X')
+          paintbrush.fill_region(x: 5, y: 6)
+          expect(Canvas.instance.raw[0].uniq).to eq(['O'])
+          expect(Canvas.instance.raw[1].uniq).to eq(['O'])
+          expect(Canvas.instance.raw[2].uniq).to eq(['B'])
+          expect(Canvas.instance.raw[3].uniq).to eq(['X'])
+          expect(Canvas.instance.raw[4].uniq).to eq(['X'])
+          expect(Canvas.instance.raw[5].uniq).to eq(['X'])
+        end
       end
     end
   end
