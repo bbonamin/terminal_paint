@@ -81,5 +81,18 @@ module TerminalPaint
         expect(Canvas.instance.raw.flatten.uniq).to eq(['C'])
       end
     end
+
+    describe 'the Z command' do
+      before do
+        command = 'I 5 5'
+        described_class.parse(command)
+      end
+
+      it 'inverts the current colours of the canvas' do
+        command = 'Z'
+        described_class.parse(command)
+        expect(Canvas.instance.raw.flatten.uniq).to eq(['L'])
+      end
+    end
   end
 end

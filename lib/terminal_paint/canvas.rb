@@ -4,6 +4,7 @@ module TerminalPaint
     include Singleton
 
     DEFAULT_COLOR = 'O'
+    VALID_COLOURS = ('A'..'Z')
 
     def draw(x:, y:)
       @x, @y = x, y
@@ -24,10 +25,10 @@ module TerminalPaint
       if colour.nil?
         @raw[absolute_y][absolute_x]
       else
-        unless colour.to_s.match(/[a-zA-Z]/)
-          fail(ArgumentError, 'Colour must be a letter')
+        unless VALID_COLOURS.cover?(colour)
+          fail(ArgumentError, 'Colour must be an upcase letter')
         end
-        @raw[absolute_y][absolute_x] = colour.upcase
+        @raw[absolute_y][absolute_x] = colour
       end
     end
 
@@ -41,6 +42,16 @@ module TerminalPaint
 
       coords.select do |coord|
         colour_at(x: coord[0], y: coord[1]) == colour
+      end
+    end
+
+    def invert_colours!
+      valid_colours = VALID_COLOURS.to_a
+      inverted_colours = valid_colours.reverse
+      @raw = @raw.map do |row|
+        row.map do |pixel|
+          inverted_colours[valid_colours.index(pixel)]
+        end
       end
     end
   end

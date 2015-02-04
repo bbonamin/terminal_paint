@@ -103,5 +103,24 @@ module TerminalPaint
         end
       end
     end
+
+    describe '#invert_colours!' do
+      before(:each) do
+        described_class.instance.draw(x: 5, y: 6)
+      end
+
+      it 'turns all O pixels in L' do
+        described_class.instance.invert_colours!
+        expect(described_class.instance.raw.flatten.uniq).to eq(['L'])
+      end
+
+      it 'turns a pixel of B color into Y' do
+        described_class.instance.colour_at(x: 1, y: 1, colour: 'B')
+        described_class.instance.invert_colours!
+        expect(described_class.instance.colour_at(x: 1, y: 1)).to eq('Y')
+        expect(described_class.instance.colour_at(x: 1, y: 2)).to eq('L')
+        expect(described_class.instance.colour_at(x: 2, y: 1)).to eq('L')
+      end
+    end
   end
 end

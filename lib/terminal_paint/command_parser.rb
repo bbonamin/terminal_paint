@@ -36,6 +36,9 @@ module TerminalPaint
           y: match_data[2].to_i
         )
       end
+      input.match(/^Z$/) do
+        Canvas.instance.invert_colours!
+      end
     end
   end
 end
