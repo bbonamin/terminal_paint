@@ -30,5 +30,18 @@ module TerminalPaint
         @raw[absolute_y][absolute_x] = colour.upcase
       end
     end
+
+    def adjacent_pixels_with_colour(x:, y:, colour:)
+      coords = (
+        [x.succ, x.pred].product([y]) +
+        [x].product([y.succ, y.pred])
+      ).select do |coord|
+        (1..@x).cover?(coord.first) && (1..@y).cover?(coord.last)
+      end
+
+      coords.select do |coord|
+        colour_at(x: coord[0], y: coord[1]) == colour
+      end
+    end
   end
 end

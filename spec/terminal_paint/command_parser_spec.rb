@@ -68,5 +68,18 @@ module TerminalPaint
         expect(Canvas.instance.raw[3][4]).to eq('C')
       end
     end
+
+    describe 'F X Y C command' do
+      before do
+        command = 'I 5 5'
+        described_class.parse(command)
+      end
+
+      it 'fills the entire canvas if it only has one color' do
+        command = 'F 1 1 C'
+        described_class.parse(command)
+        expect(Canvas.instance.raw.flatten.uniq).to eq(['C'])
+      end
+    end
   end
 end

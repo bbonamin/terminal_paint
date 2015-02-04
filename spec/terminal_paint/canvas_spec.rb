@@ -57,5 +57,51 @@ module TerminalPaint
         end
       end
     end
+
+    describe '#adjacent_pixels_with_colour' do
+      before(:each) do
+        described_class.instance.draw(x: 5, y: 6)
+      end
+
+      context 'when the whole 5x6 canvas is of the same colour' do
+        it 'returns bottom and right pixels for (1, 1)' do
+          x, y = 1, 1
+          adjacent_pixels =
+            described_class.instance.adjacent_pixels_with_colour(
+            x: x,
+            y: y,
+            colour: 'O')
+          expect(adjacent_pixels.count).to eq(2)
+          expect(adjacent_pixels).to include([1, 2])
+          expect(adjacent_pixels).to include([2, 1])
+        end
+
+        it 'returns top, right, bottom and left pixels for (3,3)' do
+          x, y = 3, 3
+          adjacent_pixels =
+            described_class.instance.adjacent_pixels_with_colour(
+            x: x,
+            y: y,
+            colour: 'O')
+          expect(adjacent_pixels.count).to eq(4)
+          expect(adjacent_pixels).to include([3, 4])
+          expect(adjacent_pixels).to include([3, 2])
+          expect(adjacent_pixels).to include([4, 3])
+          expect(adjacent_pixels).to include([2, 3])
+        end
+
+        it 'returns top and left pixels for (5,6)' do
+          x, y = 5, 6
+          adjacent_pixels =
+            described_class.instance.adjacent_pixels_with_colour(
+            x: x,
+            y: y,
+            colour: 'O')
+          expect(adjacent_pixels.count).to eq(2)
+          expect(adjacent_pixels).to include([5, 5])
+          expect(adjacent_pixels).to include([4, 6])
+        end
+      end
+    end
   end
 end
