@@ -98,6 +98,25 @@ module TerminalPaint
           expect(Canvas.instance.raw[5].uniq).to eq(['X'])
         end
       end
+
+      context 'when there is a horizontal and vertical line' do
+        before do
+          paintbrush = described_class.new(colour: 'B')
+          paintbrush.paint_vertical_line(x: 3, from: 1, to: 6)
+
+          paintbrush = described_class.new(colour: 'C')
+          paintbrush.paint_horizontal_line(y: 3, from: 1, to: 5)
+        end
+
+        it 'only fills the top left region when filling for (1, 1)' do
+          paintbrush = described_class.new(colour: 'D')
+          paintbrush.fill_region(x: 1, y: 1)
+          expect(Canvas.instance.colour_at(x: 1, y: 1)).to eq('D')
+          expect(Canvas.instance.colour_at(x: 1, y: 2)).to eq('D')
+          expect(Canvas.instance.colour_at(x: 2, y: 1)).to eq('D')
+          expect(Canvas.instance.colour_at(x: 2, y: 2)).to eq('D')
+        end
+      end
     end
   end
 end
