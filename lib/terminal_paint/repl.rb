@@ -12,7 +12,6 @@ module TerminalPaint
         begin
           @stdout.print '>'
           input = @stdin.gets.to_s.chomp.strip
-          break if input == 'X'
           CommandParser.parse(input, @stdout)
         rescue StandardError => e
           @stdout.puts "Error: #{e.message}"

@@ -3,12 +3,12 @@ module TerminalPaint
   class Canvas
     include Singleton
 
-    DEFAULT_COLOR = 'O'
+    DEFAULT_COLOUR = 'O'
     VALID_COLOURS = ('A'..'Z')
 
     def draw(x:, y:)
       @x, @y = x, y
-      @raw = Array.new(@y) { Array.new(@x) { DEFAULT_COLOR } }
+      @raw = Array.new(@y) { Array.new(@x) { DEFAULT_COLOUR } }
     end
 
     def render

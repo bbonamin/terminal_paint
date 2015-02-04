@@ -31,7 +31,7 @@ module TerminalPaint
         described_class.parse(command)
       end
 
-      it 'colors the pixel (X, Y) with the color C' do
+      it 'colours the pixel (X, Y) with the colour C' do
         command = 'L 1 1 C'
         described_class.parse(command)
         expect(Canvas.instance.raw.first.first).to eq('C')
@@ -75,7 +75,7 @@ module TerminalPaint
         described_class.parse(command)
       end
 
-      it 'fills the entire canvas if it only has one color' do
+      it 'fills the entire canvas if it only has one colour' do
         command = 'F 1 1 C'
         described_class.parse(command)
         expect(Canvas.instance.raw.flatten.uniq).to eq(['C'])

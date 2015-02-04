@@ -62,7 +62,7 @@ module TerminalPaint
     end
 
     describe '#fill_region' do
-      it 'changes the whole canvas color when it only has one color' do
+      it 'changes the whole canvas colour when it only has one colour' do
         paintbrush = described_class.new(colour: 'C')
         paintbrush.fill_region(x: 1, y: 1)
         expect(Canvas.instance.raw.flatten.uniq).to eq(['C'])

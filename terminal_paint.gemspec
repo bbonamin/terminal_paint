@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['bruno@bonamin.org']
   spec.summary       = 'A basic interactive bitmap editor for the terminal.'
   spec.description   = 'A basic interactive bitmap editor for the terminal. \
-    Paint a canvas with different colors, drawing lines and filling regions.'
+    Paint a canvas with different colours, drawing lines and filling regions.'
   spec.homepage      = ''
   spec.license       = 'MIT'
 

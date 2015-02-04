@@ -9,7 +9,8 @@ module TerminalPaint
       paint_vertical_line: /V#{COORD}#{COORD}#{COORD}#{COLOUR}/,
       paint_horizontal_line: /H#{COORD}#{COORD}#{COORD}#{COLOUR}/,
       fill_region: /F#{COORD}#{COORD}#{COLOUR}/,
-      invert_colours: /^Z$/
+      invert_colours: /^Z$/,
+      exit: /^X$/
     }
 
     def self.parse(input, stdout = $stdout)
@@ -66,6 +67,10 @@ module TerminalPaint
 
     def self.invert_colours(_)
       Canvas.instance.invert_colours!
+    end
+
+    def self.exit(_)
+      abort('Exit')
     end
   end
 end

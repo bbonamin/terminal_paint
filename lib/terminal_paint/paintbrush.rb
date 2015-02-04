@@ -26,7 +26,6 @@ module TerminalPaint
       current_colour = Canvas.instance.colour_at(x: x, y: y)
       return if current_colour == @colour
 
-      # Change pixel colour
       Canvas.instance.colour_at(x: x, y: y, colour: @colour)
       adjacent_pixels = Canvas.instance.adjacent_pixels_with_colour(
         x: x,

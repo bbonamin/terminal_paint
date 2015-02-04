@@ -22,16 +22,18 @@ module TerminalPaint
       expect(described_class.instance.render).to eq(rendered_output)
     end
 
-    it 'raises an exception if raw is called without drawing first' do
-      expect do
-        described_class.instance.raw
-      end.to raise_error(CanvasNotPresentError)
-    end
+    context 'when the canvas has not been drawn' do
+      it 'raises an exception if raw is called' do
+        expect do
+          described_class.instance.raw
+        end.to raise_error(CanvasNotPresentError)
+      end
 
-    it 'raises an exception if render is called without drawing first' do
-      expect do
-        described_class.instance.render
-      end.to raise_error(CanvasNotPresentError)
+      it 'raises an exception if render is called' do
+        expect do
+          described_class.instance.render
+        end.to raise_error(CanvasNotPresentError)
+      end
     end
 
     describe '#colour_at' do
@@ -52,11 +54,11 @@ module TerminalPaint
       it 'raises an error if the canvas has not been drawn first' do
         Singleton.__init__(Canvas)
         expect do
-          Canvas.instance.colour_at(x: 100, y: 100)
+          Canvas.instance.colour_at(x: 1, y: 1)
         end.to raise_error(CanvasNotPresentError)
       end
 
-      context 'if a color is passed as an argument' do
+      context 'if a colour is passed as an argument' do
         it 'changes the colour at a given position' do
           expect(Canvas.instance.colour_at(x: 1, y: 1)).to eq('O')
 
@@ -68,6 +70,7 @@ module TerminalPaint
           expect do
             Canvas.instance.colour_at(x: 1, y: 1, colour: '!')
           end.to raise_error(ArgumentError)
+
           expect do
             Canvas.instance.colour_at(x: 1, y: 1, colour: 7)
           end.to raise_error(ArgumentError)
@@ -131,7 +134,7 @@ module TerminalPaint
         expect(described_class.instance.raw.flatten.uniq).to eq(['L'])
       end
 
-      it 'turns a pixel of B color into Y' do
+      it 'turns a pixel of B colour into Y' do
         described_class.instance.colour_at(x: 1, y: 1, colour: 'B')
         described_class.instance.invert_colours!
         expect(described_class.instance.colour_at(x: 1, y: 1)).to eq('Y')
