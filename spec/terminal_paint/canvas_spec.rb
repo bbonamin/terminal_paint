@@ -23,11 +23,15 @@ module TerminalPaint
     end
 
     it 'raises an exception if raw is called without drawing first' do
-      expect { described_class.instance.raw }.to raise_error(StandardError)
+      expect do
+        described_class.instance.raw
+      end.to raise_error(CanvasNotPresentError)
     end
 
     it 'raises an exception if render is called without drawing first' do
-      expect { described_class.instance.render }.to raise_error(StandardError)
+      expect do
+        described_class.instance.render
+      end.to raise_error(CanvasNotPresentError)
     end
 
     describe '#colour_at' do
@@ -43,6 +47,13 @@ module TerminalPaint
         expect do
           Canvas.instance.colour_at(x: 100, y: 100)
         end.to raise_error(CoordinatesOutOfBoundError)
+      end
+
+      it 'raises an error if the canvas has not been drawn first' do
+        Singleton.__init__(Canvas)
+        expect do
+          Canvas.instance.colour_at(x: 100, y: 100)
+        end.to raise_error(CanvasNotPresentError)
       end
 
       context 'if a color is passed as an argument' do
@@ -126,6 +137,13 @@ module TerminalPaint
         expect(described_class.instance.colour_at(x: 1, y: 1)).to eq('Y')
         expect(described_class.instance.colour_at(x: 1, y: 2)).to eq('L')
         expect(described_class.instance.colour_at(x: 2, y: 1)).to eq('L')
+      end
+
+      it 'raises an error if the canvas has not been drawn first' do
+        Singleton.__init__(Canvas)
+        expect do
+          Canvas.instance.invert_colours!
+        end.to raise_error(CanvasNotPresentError)
       end
     end
   end

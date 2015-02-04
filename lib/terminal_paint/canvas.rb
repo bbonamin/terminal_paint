@@ -12,15 +12,16 @@ module TerminalPaint
     end
 
     def render
-      fail(StandardError, 'You must draw the canvas first') if @raw.nil?
-      @raw.map { |a| a.join(' ') }
+      raw.map { |a| a.join(' ') }
     end
 
     def raw
-      @raw || fail(StandardError, 'You must draw the canvas first')
+      validate_canvas!
+      @raw
     end
 
     def colour_at(x:, y:, colour: nil)
+      validate_canvas!
       validate_coordinates!(x: x, y: y)
       absolute_x, absolute_y = x - 1, y - 1
 
@@ -48,6 +49,7 @@ module TerminalPaint
     end
 
     def invert_colours!
+      validate_canvas!
       valid_colours = VALID_COLOURS.to_a
       inverted_colours = valid_colours.reverse
       @raw = @raw.map do |row|
@@ -58,6 +60,11 @@ module TerminalPaint
     end
 
     private
+
+    def validate_canvas!
+      return true unless @raw.nil?
+      fail(CanvasNotPresentError, 'You must draw the canvas first')
+    end
 
     def validate_coordinates!(x:, y:)
       return true if coordinates_within_boundaries(x: x, y: y)

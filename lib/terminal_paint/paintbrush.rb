@@ -1,6 +1,6 @@
 module TerminalPaint
   class Paintbrush
-    def initialize(colour: fail(ArgumentError, 'colour is required'))
+    def initialize(colour:)
       @colour = colour
     end
 
