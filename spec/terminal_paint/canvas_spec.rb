@@ -39,6 +39,12 @@ module TerminalPaint
         expect(Canvas.instance.colour_at(x: 1, y: 1)).to eq('O')
       end
 
+      it 'raises an error if the coordinates are out of bounds' do
+        expect do
+          Canvas.instance.colour_at(x: 100, y: 100)
+        end.to raise_error(CoordinatesOutOfBoundError)
+      end
+
       context 'if a color is passed as an argument' do
         it 'changes the colour at a given position' do
           expect(Canvas.instance.colour_at(x: 1, y: 1)).to eq('O')

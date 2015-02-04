@@ -21,7 +21,9 @@ module TerminalPaint
     end
 
     def colour_at(x:, y:, colour: nil)
+      validate_coordinates!(x: x, y: y)
       absolute_x, absolute_y = x - 1, y - 1
+
       if colour.nil?
         @raw[absolute_y][absolute_x]
       else
@@ -37,7 +39,7 @@ module TerminalPaint
         [x.succ, x.pred].product([y]) +
         [x].product([y.succ, y.pred])
       ).select do |coord|
-        (1..@x).cover?(coord.first) && (1..@y).cover?(coord.last)
+        coordinates_within_boundaries(x: coord.first, y: coord.last)
       end
 
       coords.select do |coord|
@@ -53,6 +55,19 @@ module TerminalPaint
           inverted_colours[valid_colours.index(pixel)]
         end
       end
+    end
+
+    private
+
+    def validate_coordinates!(x:, y:)
+      return true if coordinates_within_boundaries(x: x, y: y)
+      fail CoordinatesOutOfBoundError,
+           "Coordinates must be between 1 and #{@x} for X" \
+            " and between 1 and #{@y} for Y"
+    end
+
+    def coordinates_within_boundaries(x:, y:)
+      (1..@x).cover?(x) && (1..@y).cover?(y)
     end
   end
 end

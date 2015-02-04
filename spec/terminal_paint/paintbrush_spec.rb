@@ -24,6 +24,18 @@ module TerminalPaint
         expect(Canvas.instance.raw[3][1]).to eq('C')
         expect(Canvas.instance.raw[4][1]).to eq('C')
       end
+
+      it 'raises an error if not possible to build a line' do
+        paintbrush = described_class.new(colour: 'C')
+        expect do
+          paintbrush.paint_vertical_line(x: 2, from: 10, to: 1)
+        end.to raise_error(LineLengthInvalidError)
+
+        paintbrush = described_class.new(colour: 'C')
+        expect do
+          paintbrush.paint_vertical_line(x: 2, from: 1, to: 1)
+        end.to raise_error(LineLengthInvalidError)
+      end
     end
 
     describe '#paint_horizontal_line' do
@@ -34,6 +46,18 @@ module TerminalPaint
         expect(Canvas.instance.raw[2][0]).to eq('C')
         expect(Canvas.instance.raw[2][1]).to eq('C')
         expect(Canvas.instance.raw[2][2]).to eq('C')
+      end
+
+      it 'raises an error if not possible to build a line' do
+        paintbrush = described_class.new(colour: 'C')
+        expect do
+          paintbrush.paint_horizontal_line(y: 3, from: 3, to: 1)
+        end.to raise_error(LineLengthInvalidError)
+
+        paintbrush = described_class.new(colour: 'C')
+        expect do
+          paintbrush.paint_horizontal_line(y: 3, from: 5, to: 5)
+        end.to raise_error(LineLengthInvalidError)
       end
     end
 

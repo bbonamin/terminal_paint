@@ -9,10 +9,14 @@ module TerminalPaint
       @stdout.puts 'Welcome to TerminalPaint'
       @stdout.puts 'Type X to terminate the session'
       loop do
-        @stdout.print '>'
-        input = @stdin.gets.to_s.chomp.strip
-        break if input == 'X'
-        CommandParser.parse(input, @stdout)
+        begin
+          @stdout.print '>'
+          input = @stdin.gets.to_s.chomp.strip
+          break if input == 'X'
+          CommandParser.parse(input, @stdout)
+        rescue StandardError => e
+          @stdout.puts "Error: #{e.message}"
+        end
       end
     end
   end

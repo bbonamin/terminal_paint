@@ -1,5 +1,5 @@
 module TerminalPaint
-  class CommandParser
+  module CommandParser
     COLOUR = '\s+([A-Z])'
     COORD = '\s+(\d+)'
     MENU_OPTIONS = {
@@ -25,9 +25,9 @@ module TerminalPaint
 
     def self.draw_canvas(match_data)
       Canvas.instance.draw(
-          x: match_data[1].to_i,
-          y: match_data[2].to_i
-        )
+        x: match_data[1].to_i,
+        y: match_data[2].to_i
+      )
     end
 
     def self.render_canvas(_)
